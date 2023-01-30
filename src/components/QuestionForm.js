@@ -20,6 +20,20 @@ function QuestionForm(props) {
   function handleSubmit(event) {
     event.preventDefault();
     console.log(formData);
+    const { answer1, answer2, answer3, answer4, prompt, correctIndex } = formData;
+    const answers = [answer1, answer2, answer3, answer4];
+    let answered = answers.every(str => str !== "") && prompt !== "";
+
+    fetch("http://localhost:4000/questions/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        "prompt": prompt,
+        "answers": answers,
+        "correctIndex": correctIndex
+      })
+    })
+
   }
 
   return (
@@ -91,3 +105,4 @@ function QuestionForm(props) {
 }
 
 export default QuestionForm;
+
